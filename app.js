@@ -1,21 +1,30 @@
+/**
+ * @license Apache-2.0
+ * @copyright Julio Condor 2024
+ */
 "use strict";
 
 /**
  * node modules
  */
-
 const cors = require('cors')
 const cookieParser = require('cookie-parser')
 
-// Iniciar Express App
+/**
+ * custom modules
+ */
+const login = require('./src/routes/login.route')
 
+/**
+ * Iniciar Express App
+ */ 
 const express = require('express')
 const app = express()
 
 /**
  * EJS setting
  */
-app.get('view engine', 'ejs' )
+app.set('view engine', 'ejs' )
 
 /**
  * Setting static directory
@@ -25,15 +34,13 @@ app.use(express.static(`${__dirname}/public`))
 /**
  * Activando cors & cookie parser
  */
-
-app.use(cors()).use(cookieParser())
+app.use(cors())
+app.use(cookieParser())
 
 /**
  * login page
  */
-app.get('/login', (req, res) => {
-  res.send(`Login`)
-})
+app.use('/login', login)
 
 
 app.listen(5000, () => {
