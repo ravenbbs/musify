@@ -15,6 +15,7 @@ const cookieParser = require('cookie-parser')
  */
 const login = require('./src/routes/login.route')
 const auth = require('./src/routes/auth.route')
+const authenticatedUser = require('./src/middlewares/auth_user.middlewares')
 
 /**
  * Iniciar Express App
@@ -47,6 +48,11 @@ app.use('/login', login)
  * Auth page
  */
 app.use('/auth', auth)
+
+/**
+ * Check user is authenticated
+ */
+app.use(authenticatedUser)
 
 
 app.listen(5000, () => {
