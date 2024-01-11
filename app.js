@@ -14,6 +14,7 @@ const cookieParser = require('cookie-parser')
  * custom modules
  */
 const login = require('./src/routes/login.route')
+const auth = require('./src/routes/auth.route')
 
 /**
  * Iniciar Express App
@@ -41,6 +42,11 @@ app.use(cookieParser())
  * login page
  */
 app.use('/login', login)
+
+/**
+ * Auth page
+ */
+app.use('/auth', auth)
 
 
 app.listen(5000, () => {

@@ -13,8 +13,8 @@ const router = require("express").Router();
 /**
  * custom modules
  */
-const { login } = require("../controllers/login.controller");
+const { auth } = require('../controllers/auth.controller')
 
-router.get("/", login);
+router.get('/', auth)
 
 module.exports = router;
