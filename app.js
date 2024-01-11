@@ -15,7 +15,7 @@ const cookieParser = require("cookie-parser");
  */
 const login = require("./src/routes/login.route");
 const auth = require("./src/routes/auth.route");
-const authenticatedUser = require("./src/middlewares/auth_user.middlewares");
+const authenticatedUser = require("./src/middlewares/auth_user.middleware");
 
 /**
  * Iniciar Express App

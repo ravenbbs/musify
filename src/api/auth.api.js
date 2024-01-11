@@ -13,7 +13,8 @@ const axiosConfig = require("../config/axios.config");
 
 /**
  * Get access token for api request
- * @param {string} code An authorization code that can be exchanged for an Access token
+ * @param {string} code An authorization code that can be exchanged for 
+  an Access token
  * @returns {Object}
  */
 
