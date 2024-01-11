@@ -6,19 +6,16 @@
 "use strict";
 
 const authenticatedUser = (req, res, next) => {
-  const {
-    access_token,
-    refresh_token
-  } = req.cookies
+  const { access_token, refresh_token } = req.cookies;
 
   if (access_token && !refresh_token) {
-    return res.redirect('/auth')
+    return res.redirect("/auth");
   } else if (!access_token && !refresh_token) {
-    return res.redirect('/login')
+    return res.redirect("/login");
   } else if (!access_token && refresh_token) {
-    return res.redirect(`/auth/refresh_token?redirect=${req.originalUrl}`)
+    return res.redirect(`/auth/refresh_token?redirect=${req.originalUrl}`);
   }
   next();
-}
+};
 
-module.exports = authenticatedUser
+module.exports = authenticatedUser;

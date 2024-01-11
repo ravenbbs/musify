@@ -30,4 +30,4 @@ const getToken = async (code) => {
   }
 };
 
-module.exports = { getToken }
+module.exports = { getToken };

@@ -7,54 +7,53 @@
 /**
  * node modules
  */
-const cors = require('cors')
-const cookieParser = require('cookie-parser')
+const cors = require("cors");
+const cookieParser = require("cookie-parser");
 
 /**
  * custom modules
  */
-const login = require('./src/routes/login.route')
-const auth = require('./src/routes/auth.route')
-const authenticatedUser = require('./src/middlewares/auth_user.middlewares')
+const login = require("./src/routes/login.route");
+const auth = require("./src/routes/auth.route");
+const authenticatedUser = require("./src/middlewares/auth_user.middlewares");
 
 /**
  * Iniciar Express App
- */ 
-const express = require('express')
-const app = express()
+ */
+const express = require("express");
+const app = express();
 
 /**
  * EJS setting
  */
-app.set('view engine', 'ejs' )
+app.set("view engine", "ejs");
 
 /**
  * Setting static directory
  */
-app.use(express.static(`${__dirname}/public`))
+app.use(express.static(`${__dirname}/public`));
 
 /**
  * Activando cors & cookie parser
  */
-app.use(cors())
-app.use(cookieParser())
+app.use(cors());
+app.use(cookieParser());
 
 /**
  * login page
  */
-app.use('/login', login)
+app.use("/login", login);
 
 /**
  * Auth page
  */
-app.use('/auth', auth)
+app.use("/auth", auth);
 
 /**
  * Check user is authenticated
  */
-app.use(authenticatedUser)
-
+app.use(authenticatedUser);
 
 app.listen(5000, () => {
-  console.log(`Server listening at http://localhost:5000`)
-})
+  console.log(`Server listening at http://localhost:5000`);
+});
