@@ -21,9 +21,9 @@ const auth = (req, res) => {
   res.cookie(apiConfig.STATE_KEY, state);
 
   res.redirect(
-    'https://accounts.spotify.com/authorize?' +
+    "https://accounts.spotify.com/authorize?" +
       querystring.stringify({
-        response_type: 'code',
+        response_type: "code",
         client_id: apiConfig.CLIENT_ID,
         scope: apiConfig.SCOPE,
         redirect_uri: apiConfig.REDIRECT_URI,
@@ -32,6 +32,22 @@ const auth = (req, res) => {
   );
 };
 
+const callback = async (req, res) => {
+  const MILLISECONDS = 1000;
+  const ONE_WEEK = 604800000;
+
+  const { code = null, state = null, error = null } = req.query;
+
+  const /**{string} */ storedState = req.cookies[apiConfig.STATE_KEY];
+
+  if (error || !state || state !== storedState) {
+    return res.redirect("/login");
+  } else {
+    res.clearCookie(apiConfig.STATE_KEY);
+  }
+};
+
 module.exports = {
   auth,
+  callback
 };
