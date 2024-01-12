@@ -1,0 +1,50 @@
+< class="search_bar">
+  <span class="material-symbols-rounded leading-icon">search</span>
+  <img
+    src="/images/logo.svg"
+    alt="Soundfy logo"
+    width="97"
+    height="24"
+    class="logo"
+    data-logo
+  />
+
+  <form action="/search" method="post" class="search-form">
+    <label for="search" class="sr-only"> Que quieres escuchar? </label>
+
+    <input
+      type="text"
+      name="query"
+      id="search"
+      value="<%=locals.query%>"
+      class="search-field body-large"
+      required
+      data-search-field
+    />
+  </form>
+  <% 
+  const { url = '/images/avatar.png', width = 30, height = 30 } = 
+  locals.images.find( item => item.width === 64 || {}) 
+  %>
+
+  <div class="menu-wrapper" data-menu-wrapper>
+    <button
+      class="icon-btn"
+      aria-label="My profile"
+      data-ripple
+      data-menu-toggler
+    >
+      <img
+        src="<%=url%>"
+        width="<%=width%>"
+        height="<%=height%>"
+        alt="<%=locals.display_name%> profile"
+        class="avatar"
+      />
+      <div class="state-layer"></div>
+    </button>
+
+    <%- include('./menu') %>
+  </div>
+
+</div>
