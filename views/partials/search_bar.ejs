@@ -1,4 +1,4 @@
-< class="search_bar">
+<div class="search-bar ">
   <span class="material-symbols-rounded leading-icon">search</span>
   <img
     src="/images/logo.svg"
@@ -10,13 +10,14 @@
   />
 
   <form action="/search" method="post" class="search-form">
-    <label for="search" class="sr-only"> Que quieres escuchar? </label>
+    <label for="search" class="sr-only"></label>
 
     <input
       type="text"
       name="query"
       id="search"
       value="<%=locals.query%>"
+      placeholder="Que quieres escuchar?"
       class="search-field body-large"
       required
       data-search-field
@@ -27,12 +28,12 @@
   locals.images.find( item => item.width === 64 || {}) 
   %>
 
-  <div class="menu-wrapper" data-menu-wrapper>
+  <div class="active menu-wrapper" data-menu-wrapper>
     <button
       class="icon-btn"
       aria-label="My profile"
-      data-ripple
       data-menu-toggler
+      data-ripple
     >
       <img
         src="<%=url%>"
@@ -46,5 +47,11 @@
 
     <%- include('./menu') %>
   </div>
+
+  <%- include('./icon_btn' ,{
+    variant: 'clear',
+    icon: 'close',
+    dataAttr: 'data-search-clear'
+  })%>
 
 </div>
