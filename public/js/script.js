@@ -73,25 +73,77 @@ const ripple = function ($rippleElem) {
     $ripple.classList.add("ripple");
     this.appendChild($ripple);
     const removeRipple = () => {
-      $ripple.animate({
-        opacity: 0
-      }, {fill: 'forwards', duration: 200})
+      $ripple.animate(
+        {
+          opacity: 0,
+        },
+        { fill: "forwards", duration: 200 }
+      );
 
       setTimeout(() => {
-        $ripple.remove()
-      }, 1000)
-    }
-    this.addEventListener('pointerup', removeRipple)
-    this.addEventListener('pointerleave', removeRipple)
+        $ripple.remove();
+      }, 1000);
+    };
+    this.addEventListener("pointerup", removeRipple);
+    this.addEventListener("pointerleave", removeRipple);
 
-    const /**{number} */ rippleSize = Math.max(this.clientWidth, this.clientHeight)
-    $ripple.style.top = `${event.layerY}px`
-    $ripple.style.left = `${event.layerX}px`
-    $ripple.style.width = `${rippleSize}px`
-    $ripple.style.height = `${rippleSize}px`
-
+    const /**{number} */ rippleSize = Math.max(
+        this.clientWidth,
+        this.clientHeight
+      );
+    $ripple.style.top = `${event.layerY}px`;
+    $ripple.style.left = `${event.layerX}px`;
+    $ripple.style.width = `${rippleSize}px`;
+    $ripple.style.height = `${rippleSize}px`;
   });
 };
 const /** {HTMLElement} */ $rippleElems =
     document.querySelectorAll("[data-rippler]");
 $rippleElems?.forEach((item) => ripple(item));
+
+/**
+ * Image animation on loading
+ * */
+
+window.addEventListener("DOMContentLoaded", function () {
+  const /** {Array<HTMLElement>} */ $animatedImages = document.querySelectorAll(
+      "[data-image-load-anim]"
+    );
+
+  const addAnimation = function () {
+    this.animate(
+      {
+        opacity: 1,
+      },
+      { duration: 200, fill: "forwards" }
+    );
+  };
+  $animatedImages.forEach(($image) => {
+    $image.style.opacity = 0;
+
+    if ($image.complete) {
+      addAnimation.call($image);
+    } else {
+      $image.addEventListener("load", addAnimation);
+    }
+  });
+});
+
+/**
+ * Bottom nav item active
+ */
+
+const /** {Array<HTMLElement>} */ $bottomNavItems = document.querySelectorAll(
+    "[data-bottom-nav-item]"
+  );
+
+const /** {HTMLElement} */ $activeBottomNavItem = document.querySelector(
+    "[data-bottom-nav-item].active"
+  );
+
+const activeNavItem = function () {
+  $activeBottomNavItem?.classList.remove("active");
+  this.classList.add("active");
+};
+
+$bottomNavItems && addEventOnElems($bottomNavItems, "click", activeNavItem);
