@@ -10,6 +10,39 @@
 
       <!-- Bottom nav  -->
       <%- include('../partials/bottom_nav', { currentRoute: '/' }) %>
+
+      <div class="main" data-main>
+        <!-- recommended album -->
+        <% if(locals.recommendedAlbums.length) { %>
+        <section class="section new-release">
+          <div class="tittle-wrapper">
+            <h2 class="title-large section-title"></h2>
+          </div>
+        </section>
+        <div class="slider" data-slider>
+          <div class="slider-inner">
+            <% locals.recommendedAlbums.forEach(({ album: {artists, images, name: title, id, uri} }) => { %> 
+
+            <% 
+              const text = artists.map(({name}) => name).join(', ') 
+              const image = images.find(item => item.width === 300) 
+            %> 
+            
+            <%- include('../partials/card', {
+              image,
+              type: 'album',
+              title,
+              text,
+              link: `/album/${id}`,
+              uri
+            }) %>
+    
+            <% } ) %>
+          </div>
+        </div>
+
+        <% } %>
+      </div>
     </article>
   </body>
 </html>
