@@ -63,7 +63,7 @@ $page?.addEventListener("scroll", function () {
 });
 
 /**
- * Ripple efect
+ * Ripple effect
  */
 
 const ripple = function ($rippleElem) {
