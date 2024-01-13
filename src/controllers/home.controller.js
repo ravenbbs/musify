@@ -13,6 +13,7 @@ const userApi = require("../api/user.api");
 const playerApi = require("../api/player.api");
 const trackApi = require("../api/track.api");
 const artistApi = require("../api/artist.api");
+const albumApi = require("../api/album.api");
 
 
 const home = async (req, res) => {
@@ -35,11 +36,16 @@ const home = async (req, res) => {
   const uniqueArtistIds = [... new Set(artistIdEntries.flat(1))].join(',')
   const recommendedArtist = await artistApi.getSeveralDetail(req, uniqueArtistIds )
   
+  //new release albums
+  const newRelease = await albumApi.getNewRelease(req, apiConfig.LOW_LIMIT)
+
+
   res.render("./pages/home", {
     currentProfile,
     // recentlyPlayedTracks,
     recommendedAlbums,
-    recommendedArtist
+    recommendedArtist,
+    newRelease
   });
 };
 
