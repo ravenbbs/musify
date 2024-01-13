@@ -12,6 +12,8 @@ const apiConfig = require("../config/api.config")
 const userApi = require("../api/user.api");
 const playerApi = require("../api/player.api");
 const trackApi = require("../api/track.api");
+const artistApi = require("../api/artist.api");
+
 
 const home = async (req, res) => {
   //current user profile
@@ -28,10 +30,16 @@ const home = async (req, res) => {
   const trackSeed = trackIds.slice(0, 5).join(',')
   const recommendedAlbums = await trackApi.getRecommendedTrack(req, trackSeed, apiConfig.LOW_LIMIT )
 
+  //recommended artist
+  const artistIdEntries = recommendedAlbums.map(track => track.artists.map(artist => artist.id))
+  const uniqueArtistIds = [... new Set(artistIdEntries.flat(1))].join(',')
+  const recommendedArtist = await artistApi.getSeveralDetail(req, uniqueArtistIds )
+  
   res.render("./pages/home", {
     currentProfile,
     // recentlyPlayedTracks,
-    recommendedAlbums
+    recommendedAlbums,
+    recommendedArtist
   });
 };
 

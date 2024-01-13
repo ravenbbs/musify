@@ -1,3 +1,10 @@
+<% 
+// recommended artist
+const {
+  artists:recommendedArtistItems
+} = locals.recommendedArtist
+%>
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -14,34 +21,63 @@
       <div class="main" data-main>
         <!-- recommended album -->
         <% if(locals.recommendedAlbums.length) { %>
-        <section class="section new-release">
-          <div class="tittle-wrapper">
-            <h2 class="title-large section-title"></h2>
+        <section class="section">
+          <div class="title-wrapper">
+            <h2 class="title-large section-title"> Recomendado para ti</h2>
           </div>
-        </section>
-        <div class="slider" data-slider>
-          <div class="slider-inner">
-            <% locals.recommendedAlbums.forEach(({ album: {artists, images, name: title, id, uri} }) => { %> 
 
-            <% 
-              const text = artists.map(({name}) => name).join(', ') 
-              const image = images.find(item => item.width === 300) 
-            %> 
-            
-            <%- include('../partials/card', {
-              image,
-              type: 'album',
-              title,
-              text,
-              link: `/album/${id}`,
-              uri
-            }) %>
-    
-            <% } ) %>
-          </div>
-        </div>
+          <div class="slider">
+            <div class="slider-inner">
+              <% locals.recommendedAlbums.forEach(({ album: {artists, images, name: title, id, uri} }) => { %> 
 
+              <% 
+                const text = artists.map(({name}) => name).join(', ') 
+                const image = images.find(item => item.width === 300) 
+              %> 
+              
+              <%- include('../partials/card', {
+                image,
+                type: 'album',
+                title,
+                text,
+                link: `/album/${id}`,
+                uri
+              }) %>
+      
+              <% }) %>
+            </div>
+            </div>
+          </section>
         <% } %>
+
+        <!-- recommended artist -->
+        <% if (recommendedArtistItems.length) { %>
+          <section class="section">
+            <div class="title-wrapper">
+              <h2 class="title-large section-title">Artistas para ti</h2>
+            </div>
+  
+            <div class="slider" >
+              <div class="slider-inner">
+                <% recommendedArtistItems.forEach(({name: title, type, images, id, uri}) => { %>
+                  
+                  <% const [image] = images || [] %>
+
+                  <%- include('../partials/card', {
+                    variant: 'artist-card',
+                    title,
+                    image,
+                    type,
+                    text: type,
+                    link: `/artist/${id}`
+                  }) %>
+
+                <% }) %>
+              </div>
+            </div>
+            </section>
+        <% } %>
+
       </div>
     </article>
   </body>
