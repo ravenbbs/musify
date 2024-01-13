@@ -49,7 +49,9 @@ const callback = async (req, res) => {
     if (response.status === 200) {
       // console.log(response.data);
       const { access_token, refresh_token, expires_in } = response.data;
-      res.cookie("access_token", access_token, {maxAge: expires_in * MILLISECONDS});
+      res.cookie("access_token", access_token, {
+        maxAge: expires_in * MILLISECONDS,
+      });
       res.cookie("refresh_token", refresh_token, { maxAge: ONE_WEEK });
       res.redirect("/");
     } else {

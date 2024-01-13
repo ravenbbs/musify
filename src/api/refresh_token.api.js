@@ -27,4 +27,4 @@ const getRefreshToken = async (refreshToken) => {
   }
 };
 
-module.exports = { getRefreshToken }
+module.exports = { getRefreshToken };

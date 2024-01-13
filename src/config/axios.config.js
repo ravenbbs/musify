@@ -22,17 +22,17 @@ const apiConfig = require("./api.config");
 const token = axios.create({
   baseURL: apiConfig.TOKEN_BASE_URL,
   headers: {
-    'Authorization': `Basic ${(Buffer.from(apiConfig.CLIENT_ID +
-    ':' + apiConfig.CLIENT_SECRET).toString('base64'))}`,
-    'Content-Type': 'application/x-www-form-urlencoded'
-  }
-})
+    Authorization: `Basic ${Buffer.from(
+      apiConfig.CLIENT_ID + ":" + apiConfig.CLIENT_SECRET
+    ).toString("base64")}`,
+    "Content-Type": "application/x-www-form-urlencoded",
+  },
+});
 
 /**
  * axios instance for all API request
  */
-const api = axios.create({ baseURL: apiConfig.BASE_URL })
-
+const api = axios.create({ baseURL: apiConfig.BASE_URL });
 
 /**
  * fetch data from API using access token for authentication
@@ -45,18 +45,17 @@ const api = axios.create({ baseURL: apiConfig.BASE_URL })
 const getData = async (apiUrl, access_token) => {
   try {
     const /** {Promise} */ response = await api.get(apiUrl, {
-      headers:{
-        'Authorization': `Bearer ${access_token}`
-      }
-    })
-    return response
+        headers: {
+          Authorization: `Bearer ${access_token}`,
+        },
+      });
+    return response;
   } catch (err) {
-    console.log(err)
+    console.log(err);
   }
-
-}
+};
 
 module.exports = {
   token,
-  getData
-}
+  getData,
+};

@@ -1,20 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
- <%- include('../layouts/head', {title: 'Home | Soundfy'}) %>
-  
-</head>
-<body>
+  <head>
+    <%- include('../layouts/head', {title: 'Home | Soundfy'}) %>
+  </head>
+  <body>
+    <article class="page custom-scrollbar">
+      <!-- Top app bar -->
+      <%- include('../partials/top_bar', locals.currentProfile) %>
 
-  <article class="page custom-scrollbar">
-    <!-- Top app bar -->
-    <%- include('../partials/top_bar', locals.currentProfile)  %>
-
-    <!-- Bottom nav  -->
-    <%- include('../partials/bottom_nav', { currentRoute: '/' })  %>
-
-  </article>
-  
-
-</body>
+      <!-- Bottom nav  -->
+      <%- include('../partials/bottom_nav', { currentRoute: '/' }) %>
+    </article>
+  </body>
 </html>
