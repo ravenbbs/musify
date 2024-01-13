@@ -218,7 +218,7 @@
     visibility: hidden;
   }
   100% {
-    opacity: 0;
+    opacity: 1;
     visibility: visible;
   }
 }
@@ -250,7 +250,7 @@
 #Menu 
 */
 
-.menu-wraper {
+.menu-wrapper {
   position: relative;
 }
 
@@ -267,10 +267,10 @@
   transform: scale(0.8);
   opacity: 0;
   visibility: hidden;
-  transition: var(--tr-duration-short-4) var(--tr-easing-emphasized);
 }
 
-.menu-wraper.active .menu {
+.menu-wrapper.active .menu {
+  transition: var(--tr-duration-short-4) var(--tr-easing-emphasized);
   transform: scale(1);
   opacity: 1;
   visibility: visible;
