@@ -6,10 +6,10 @@
 "use strict";
 
 /**
- * custom modules 
+ * custom modules
  * */
-const { getData } = require('../config/axios.config')
-const { getUrlQuery } = require('../utils/helpers.util')
+const { getData } = require("../config/axios.config");
+const { getUrlQuery } = require("../utils/helpers.util");
 
 /**
  * Get a list of new album releases featured in Spotify
@@ -18,14 +18,18 @@ const { getUrlQuery } = require('../utils/helpers.util')
  * @returns {Object}
  */
 const getNewRelease = async (req, itemLimit) => {
-  const { limit, offset, page } = getUrlQuery(req.params, itemLimit)
+  const { limit, offset, page } = getUrlQuery(req.params, itemLimit);
 
-  const {data:{albums: newRelease}} = await getData(`/browse/new-releases?limit=${limit}&offset=${offset}`,
-  req.cookies.access_token)
+  const {
+    data: { albums: newRelease },
+  } = await getData(
+    `/browse/new-releases?limit=${limit}&offset=${offset}`,
+    req.cookies.access_token
+  );
 
-  return { baseUrl: req.baseUrl, page, ...newRelease}
-}
+  return { baseUrl: req.baseUrl, page, ...newRelease };
+};
 
 module.exports = {
-  getNewRelease
-}
+  getNewRelease,
+};

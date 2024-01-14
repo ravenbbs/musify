@@ -10,6 +10,24 @@ const {
   next: newReleaseNext
 } = locals.newRelease
 
+//featured playlist
+const {
+  message: featuredPlayListTitle,
+  playlists: { 
+    items: featuredPlayListItems,
+    next: featuredPlayListNext
+  }
+} = locals.featuredPlayList
+
+//top playlists
+console.log(locals.topPlayLists)
+const {
+  playlists: { 
+    items: topPlayListItems,
+    next: topPlayListNext
+  }
+} = locals.topPlayLists
+
 %>
 
 <!DOCTYPE html>
@@ -28,32 +46,32 @@ const {
       <div class="main" data-main>
         <!-- recommended album -->
         <% if(locals.recommendedAlbums.length) { %>
-        <section class="section">
-          <div class="title-wrapper">
-            <h2 class="title-large section-title"> Recomendado para ti</h2>
-          </div>
-
-          <div class="slider">
-            <div class="slider-inner">
-              <% locals.recommendedAlbums.forEach(({ album: {artists, images, name: title, id, uri} }) => { %> 
-
-              <% 
-                const text = artists.map(({name}) => name).join(', ') 
-                const image = images.find(item => item.width === 300) 
-              %> 
-              
-              <%- include('../partials/card', {
-                image,
-                type: 'album',
-                title,
-                text,
-                link: `/album/${id}`,
-                uri
-              }) %>
-      
-              <% }) %>
+          <section class="section">
+            <div class="title-wrapper">
+              <h2 class="title-large section-title"> Recomendado para ti</h2>
             </div>
-            </div>
+
+            <div class="slider">
+              <div class="slider-inner">
+                <% locals.recommendedAlbums.forEach(({ album: {artists, images, name: title, id, uri} }) => { %> 
+
+                <% 
+                  const text = artists.map(({name}) => name).join(', ') 
+                  const image = images.find(item => item.width === 300) 
+                %> 
+                
+                <%- include('../partials/card', {
+                  image,
+                  type: 'album',
+                  title,
+                  text,
+                  link: `/album/${id}`,
+                  uri
+                }) %>
+        
+                <% }) %>
+              </div>
+              </div>
           </section>
         <% } %>
 
@@ -82,11 +100,10 @@ const {
                 <% }) %>
               </div>
             </div>
-            </section>
+          </section>
         <% } %>
 
         <!-- new release album -->
-        <%  %>
         <section class="section">
           <div class="title-wrapper">
             <h2 class="title-large section-title">Nuevos Lanzamientos</h2>
@@ -116,7 +133,75 @@ const {
 
             </div>
           </div>
-          </section>
+        </section>
+
+        <!-- featured playlist -->
+        <section class="section">
+            <div class="title-wrapper">
+              <h2 class="title-large section-title">
+                <%=featuredPlayListTitle%>
+              </h2>
+              <% if (featuredPlayListNext !== null) { %>
+                <a href="/playlist" class="btn btn-link" data-ripple>
+                  <span class="label-large">Ver mas</span>
+                  <div class="state-layer"></div>
+                </a>
+              <% } %>
+            </div>
+  
+            <div class="slider" >
+              <div class="slider-inner">
+  
+                <% featuredPlayListItems.forEach(({id, images, name: title, description, uri}) => { %>
+                  <% const [image] = images || []; %>
+
+                  <%- include('../partials/card', {
+                    image,
+                    type: 'playlist',
+                    title,
+                    text: description,
+                    link: `/playlist/${id}`,
+                    uri
+                  }); %>
+  
+                <% }) %> 
+
+              </div>
+            </div>
+        </section>
+
+        <!-- top playlists -->
+        <section class="section">
+          <div class="title-wrapper">
+            <h2 class="title-large section-title">Top Playlist</h2>
+            <% if (topPlayListNext !== null) { %>
+              <a href="/playlist" class="btn btn-link" data-ripple>
+                <span class="label-large">Ver mas</span>
+                <div class="state-layer"></div>
+              </a>
+            <% } %>
+          </div>
+
+          <div class="slider" >
+            <div class="slider-inner">
+
+              <% topPlayListItems.forEach(({id, images, name: title, description, uri}) => { %>
+                <% const [image] = images || []; %>
+
+                <%- include('../partials/card', {
+                  image,
+                  type: 'playlist',
+                  title,
+                  text: description,
+                  link: `/playlist/${id}`,
+                  uri
+                }); %>
+
+              <% }) %> 
+
+            </div>
+          </div>
+        </section>
 
       </div>
     </article>

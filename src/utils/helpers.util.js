@@ -41,13 +41,13 @@ const generateRandomString = function (length) {
  */
 
 const getUrlQuery = (params, limit = apiConfig.DEFAULT_LIMIT) => {
-  const {page = 1} = params;
-  const /**{number} */ offset = (limit * page) - limit;
+  const { page = 1 } = params;
+  const /**{number} */ offset = limit * page - limit;
 
-  return {limit, offset, page}
-}
+  return { limit, offset, page };
+};
 
 module.exports = {
   generateRandomString,
-  getUrlQuery
+  getUrlQuery,
 };
