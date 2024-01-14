@@ -701,7 +701,7 @@
 */
 .player-lg{
   position: fixed;
-  bottom: 0;
+  top: 100%;
   left: 0;
   width: 100%;
   background-color: var(--surface-container-low);
@@ -716,7 +716,7 @@
 }
 
 .player-lg.active {
-  transform: translate(-100%);
+  transform: translateY(-100%);
   visibility: visible;
 }
 
@@ -808,7 +808,7 @@
   z-index: 4;
 }
 
-.player-overlay .active {
+.player-overlay.active {
   opacity: 0.5;
   visibility: visible;
 }

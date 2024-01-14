@@ -147,3 +147,18 @@ const activeNavItem = function () {
 };
 
 $bottomNavItems && addEventOnElems($bottomNavItems, "click", activeNavItem);
+
+/**
+ * Player modal toggle
+ */
+const /** {HTMLElement} */  $modalPlayer = document.querySelector('[data-modal-player]')
+const /** {Array<HTMLElement>} */ $modalPlayerTogglers = document.querySelectorAll('[data-modal-player-toggler]')
+const /** {HTMLElement} */  $modalPlayerOverlay = document.querySelector('[data-player-overlay]')
+
+const toggleModalPlayer = function () {
+  $modalPlayer.classList.toggle('active')
+  $modalPlayerOverlay.classList.toggle('active')
+
+}
+
+$modalPlayerTogglers && addEventOnElems($modalPlayerTogglers, 'click', toggleModalPlayer)
