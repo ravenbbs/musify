@@ -106,6 +106,28 @@ const updatePlayerBtnState = (playerState, $player) => {
   $playerControlPlay.dataset.playBtn = paused ? "play" : "pause";
 };
 
+const /** {string} */ documentTitle = document.title
+
+const updateDocumentTitle = (playerState) => {  
+  //set document title when playing
+  const {
+    paused,
+    track_window: {
+      current_track: { 
+        artists: trackArtists,
+        name: trackName
+      },
+    },
+  } = playerState;
+
+  const /**{string} */ artistNameStr = trackArtists.map(({name}) => name).join(', ')
+
+  document.title = paused ? documentTitle : `${trackName} • ${artistNameStr} | Soundfy`
+
+
+}
+
+
 /**
  * When any changes occur in player this function will be execute
  * e.g. change track/volume/play/pause/seek/next/previous
@@ -122,6 +144,11 @@ const playerStateChanged = (playerState) => {
 
   // update player control play btn ui state after state change
   $players.forEach((player) => updatePlayerBtnState(playerState, player));
+
+  //update document title when playing track
+  updateDocumentTitle(playerState)
+
+
 };
 
 /**Toggle play */
