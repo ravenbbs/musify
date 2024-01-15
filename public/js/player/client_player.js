@@ -9,7 +9,7 @@
  */
 import { cookies, transferPlayback, play } from "./client_player.api.js";
 
-import { addEventOnElems } from "../utils.js";
+import { addEventOnElems, msToTimeCode } from "../utils.js";
 
 const /**{Array<HTMLElement>} */ $players =
     document.querySelectorAll("[data-player]");
@@ -106,27 +106,65 @@ const updatePlayerBtnState = (playerState, $player) => {
   $playerControlPlay.dataset.playBtn = paused ? "play" : "pause";
 };
 
-const /** {string} */ documentTitle = document.title
+const /** {string} */ documentTitle = document.title;
 
-const updateDocumentTitle = (playerState) => {  
+const updateDocumentTitle = (playerState) => {
   //set document title when playing
   const {
     paused,
     track_window: {
-      current_track: { 
-        artists: trackArtists,
-        name: trackName
-      },
+      current_track: { artists: trackArtists, name: trackName },
     },
   } = playerState;
 
-  const /**{string} */ artistNameStr = trackArtists.map(({name}) => name).join(', ')
+  const /**{string} */ artistNameStr = trackArtists
+      .map(({ name }) => name)
+      .join(", ");
 
-  document.title = paused ? documentTitle : `${trackName} • ${artistNameStr} | Soundfy`
+  document.title = paused
+    ? documentTitle
+    : `${trackName} • ${artistNameStr} | Soundfy`;
+};
 
+const /**{HTMLElement} */ $playerLgProgress = document.querySelector(
+    "[data-player-progress-lg]"
+  );
+const /**{HTMLElement} */ $playerSmProgress = document.querySelector(
+    "[data-player-progress-sm]"
+  );
+const /**{HTMLElement} */ $playerLgProgressPos = document.querySelector(
+    "[data-progress-pos]"
+  );
+const /**{HTMLElement} */ $playerLgProgressDuration = document.querySelector(
+    "[data-progress-duration]"
+  );
 
-}
+let /** {NodeJS.Timeout | undefined } */ lastProgressInterval;
 
+const updatePlayerProgress = (playerState) => {
+  const { position, duration, paused } = playerState;
+
+  //progress initial value
+  let currentPosition = position;
+  $playerLgProgress.max = duration;
+  $playerSmProgress.max = duration;
+  $playerLgProgress.value = currentPosition;
+  $playerSmProgress.value = currentPosition;
+  $playerLgProgressDuration.textContent = msToTimeCode(duration);
+  $playerLgProgressPos.textContent = msToTimeCode(currentPosition);
+
+  lastProgressInterval && clearInterval(lastProgressInterval);
+
+  if (!paused) {
+    const currentProgressInterval = setInterval(() => {
+      currentPosition += 1000;
+      $playerLgProgress.value = currentPosition;
+      $playerSmProgress.value = currentPosition;
+      $playerLgProgressPos.textContent = msToTimeCode(currentPosition);
+    }, 1000);
+    lastProgressInterval = currentProgressInterval;
+  }
+};
 
 /**
  * When any changes occur in player this function will be execute
@@ -146,9 +184,10 @@ const playerStateChanged = (playerState) => {
   $players.forEach((player) => updatePlayerBtnState(playerState, player));
 
   //update document title when playing track
-  updateDocumentTitle(playerState)
+  updateDocumentTitle(playerState);
 
-
+  //update player progress
+  updatePlayerProgress(playerState);
 };
 
 /**Toggle play */
