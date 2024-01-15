@@ -7,10 +7,9 @@
 /**
  * custom modules
  */
-import { cookies, transferPlayback } from "./client_player.api.js";
+import { cookies, transferPlayback, play } from "./client_player.api.js";
 
 import { addEventOnElems } from "../utils.js";
-
 
 const /**{Array<HTMLElement>} */ $players =
     document.querySelectorAll("[data-player]");
@@ -72,6 +71,38 @@ const playerStateChanged = (playerState) => {
   $players.forEach((player) => updatePlayerInfo(playerState, player));
 };
 
+/**Toggle play */
+const togglePlay = async function (player) {
+  const /**{string} */ deviceId = localStorage.getItem("device_id");
+
+  const {
+    context: { uri: currentUri },
+    track_window: {
+      current_track: { uri: currentTrackUri },
+    },
+  } = await player.getCurrentState();
+
+  const { uri: btnUri, trackUri: btnTrackUri, playBtn } = this.dataset;
+
+  if (playBtn === "play") {
+    const /**{boolean} */ lastPlayed =
+        currentUri === btnUri || currentTrackUri === btnTrackUri;
+
+    if ((!btnUri && !btnTrackUri) || lastPlayed) {
+      return await player.resume();
+    }
+
+    const /** {object} */ reqBody = {};
+
+    btnUri ? (reqBody.context_uri = btnUri) : null;
+    btnTrackUri ? (reqBody.uris = [btnTrackUri]) : null;
+
+    await play(deviceId, reqBody);
+  } else {
+    await player.pause()
+  }
+};
+
 window.onSpotifyWebPlaybackSDKReady = () => {
   const token = cookies.get("access_token");
   const /**{number} */ volume = localStorage.getItem("volume") ?? 100;
@@ -87,14 +118,16 @@ window.onSpotifyWebPlaybackSDKReady = () => {
 
   // Player is ready
   player.addListener("ready", async ({ device_id }) => {
-
     // store device_id in localStorage
     localStorage.setItem("device_id", device_id);
     // transfer playback
     await transferPlayback(device_id);
 
-    const /**{Array<HTMLElement>} */ playBtns = document.querySelector('[data-play-btn]')
-
+    const /**{Array<HTMLElement>} */ $playBtns =
+        document.querySelectorAll("[data-play-btn]");
+    addEventOnElems($playBtns, "click", function () {
+      togglePlay.call(this, player);
+    });
   });
 
   // call event when any changes occur in player
