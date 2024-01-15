@@ -5,13 +5,13 @@
 "use strict";
 
 const cookies = new Map(
-  document.cookie.split("; ").map(item => item.split("="))
+  document.cookie.split("; ").map((item) => item.split("="))
 );
 
 // base address web api
 const BASE_URL = "https://api.spotify.com/v1";
 const headers = {
-  "Authorization": `Bearer ${cookies.get("access_token")}`,
+  Authorization: `Bearer ${cookies.get("access_token")}`,
   "Content-Type": "application/json",
 };
 
@@ -42,14 +42,17 @@ const transferPlayback = async (deviceId, play = false) => {
  */
 const play = async (deviceId, reqBody) => {
   try {
-    const response = await fetch(`${BASE_URL}/me/player/play?device_id=${deviceId}`, {
-      method: 'PUT',
-      headers,
-      body: JSON.stringify(reqBody)
-    })  
+    const response = await fetch(
+      `${BASE_URL}/me/player/play?device_id=${deviceId}`,
+      {
+        method: "PUT",
+        headers,
+        body: JSON.stringify(reqBody),
+      }
+    );
   } catch (error) {
-    console.log(error)
+    console.log(error);
   }
-}
+};
 
 export { cookies, transferPlayback, play };

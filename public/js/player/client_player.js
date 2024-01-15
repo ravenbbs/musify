@@ -35,7 +35,6 @@ const updatePlayerInfo = (playerState, $player) => {
     },
   } = playerState;
 
-  console.log(playerState);
   const {
     url = "/images/track-banner.png",
     width,
@@ -60,6 +59,53 @@ const updatePlayerInfo = (playerState, $player) => {
   $player.classList.remove("disabled");
 };
 
+let /**{Array<HTMLElement> | undefined} */ $lastActivePlayBtns = [];
+
+const updateCardPlayBtnState = (playerState) => {
+  const {
+    paused,
+    context: { uri },
+    track_window: {
+      current_track: { uri: trackUri },
+    },
+  } = playerState;
+
+  const /** {Array<HTMLElement> */ $cardPlayBtns = document.querySelectorAll(
+      `[data-uri="${uri}"`
+    );
+  const /** {Array<HTMLElement> */ $trackPlayBtns = document.querySelectorAll(
+      `[data-track-uri="${trackUri}"`
+    );
+
+  const /** {Array<HTMLElement> */ $currentActivePlayBtns = [
+      ...$cardPlayBtns,
+      ...$trackPlayBtns,
+    ];
+
+  $lastActivePlayBtns.forEach(($playBtn) => {
+    $playBtn.classList.remove("active");
+    $playBtn.dataset.playBtn = "play";
+  });
+
+  $currentActivePlayBtns.forEach(($playBtn) => {
+    $playBtn.classList[paused ? "remove" : "add"]("active");
+    $playBtn.dataset.playBtn = paused ? "play" : "pause";
+  });
+
+  $lastActivePlayBtns = $currentActivePlayBtns;
+};
+
+const updatePlayerBtnState = (playerState, $player) => {
+  const /** {HTMLElement} */ $playerControlPlay = $player.querySelector(
+      "[data-player-control-play]"
+    );
+
+  const { paused } = playerState;
+
+  $playerControlPlay.classList[paused ? "remove" : "add"]("active");
+  $playerControlPlay.dataset.playBtn = paused ? "play" : "pause";
+};
+
 /**
  * When any changes occur in player this function will be execute
  * e.g. change track/volume/play/pause/seek/next/previous
@@ -68,7 +114,14 @@ const updatePlayerInfo = (playerState, $player) => {
 const playerStateChanged = (playerState) => {
   const { track_window } = playerState;
 
+  // update player ui
   $players.forEach((player) => updatePlayerInfo(playerState, player));
+
+  //update card play btn ui state e.g. play, pause
+  updateCardPlayBtnState(playerState);
+
+  // update player control play btn ui state after state change
+  $players.forEach((player) => updatePlayerBtnState(playerState, player));
 };
 
 /**Toggle play */
@@ -99,7 +152,7 @@ const togglePlay = async function (player) {
 
     await play(deviceId, reqBody);
   } else {
-    await player.pause()
+    await player.pause();
   }
 };
 
