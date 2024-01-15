@@ -13,6 +13,12 @@ import { addEventOnElems, msToTimeCode } from "../utils.js";
 
 const /**{Array<HTMLElement>} */ $players =
     document.querySelectorAll("[data-player]");
+const /**{HTMLElement} */ $playerNextBtn = document.querySelector(
+    "[data-player-next-btn]"
+  );
+const /**{HTMLElement} */ $playerPrevBtn = document.querySelector(
+    "[data-player-prev-btn]"
+  );
 
 const updatePlayerInfo = (playerState, $player) => {
   const /**{HTMLElement} */ $trackBanner = $player.querySelector(
@@ -188,6 +194,10 @@ const playerStateChanged = (playerState) => {
 
   //update player progress
   updatePlayerProgress(playerState);
+
+  //disable next and prev button if there is no track available
+  $playerNextBtn.disabled = !track_window.next_tracks.length;
+  $playerPrevBtn.disabled = !track_window.previous_tracks.length;
 };
 
 /**Toggle play */
@@ -247,6 +257,22 @@ window.onSpotifyWebPlaybackSDKReady = () => {
     addEventOnElems($playBtns, "click", function () {
       togglePlay.call(this, player);
     });
+
+    // skip to next
+    $playerNextBtn.addEventListener("click", async () => {
+      await player.nextTrack();
+    });
+
+    //skip to previous 
+    $playerPrevBtn.addEventListener("click", async () => {
+      await player.previousTrack();
+    });
+
+    //control player seek
+    $playerLgProgress.addEventListener('input', async function () {
+      await player.seek(this.value)
+    })
+
   });
 
   // call event when any changes occur in player
