@@ -817,7 +817,6 @@
 /* 
   responsive for a larger than 768px screen
 */
-
 @media (min-width: 768px) {
   /* Base */
   body {
@@ -1003,4 +1002,111 @@
   }
 }
 
+/* 
+  responsive for a larger than 992px screen
+*/
+@media (min-width: 992px) {
+  .section {
+    margin-block-start: var(--space-6);
+  }
 
+  .slider {
+    margin-inline: -24px;
+    padding-inline: var(--space-6);
+  }
+
+  .slider-inner {
+    gap: var(--space-4);
+  }
+
+  /* Page */
+
+  .page,
+  .page:has(.player-sm.hide) {
+    padding-inline: var(--space-6);
+    padding-block-end: var(--space-6);
+  }
+
+  /* ------- Components ----- */
+  /* Top bar */
+  .top-bar {
+    margin-inline: -24px;
+    padding-inline: var(--space-6);
+  }
+
+  /* Player */
+  .player-range-wrapper {
+    max-width: 860px;
+  }
+
+  /* Menu */
+  .menu-wraper {
+    right: var(--space-6);
+  }
+}
+
+
+/* 
+  responsive for a larger than 1200px screen
+*/
+@media (min-width: 1200px) {
+  /* Custom property */
+
+  :root {
+    /* Others */
+    --navigation-rail-width: 360px;
+  }
+
+  /* Reused Style */
+  .slider .card {
+    min-width: 180px;
+    max-width: 180px;
+  }
+
+  /* -------- Components --------- */
+  /* Navbar */
+  .bottom-nav {
+    height: max-content;
+    padding: var(--space-3);
+    padding-block-start: 0;
+    gap: 0;
+  }
+
+  .bottom-nav-item {
+    position: relative;
+    grid-template-columns: max-content 1fr;
+    justify-content: flex-start;
+    align-items: center;
+    gap: var(--space-3);
+    padding-inline: var(--space-4) var(--space-6);
+    border-radius: var(--radius-full);
+    overflow: hidden;
+  }
+
+  .label-medium {
+    text-align: left;
+  }
+
+  .bottom-nav .logo {
+    height: 72px;
+    padding-block-end: var(--space-2);
+  }
+
+  .bottom-nav .logo .large { display: block;}
+
+  .bottom-nav .logo :where(.small, .bottom-nav-text) {
+    display: none;
+  }
+
+  .bottom-nav-item .icon-wrapper {
+    all: unset;
+  }
+  
+  .bottom-nav-text {
+    font-size: var(--fs-label-large);
+    line-height: var(--lh-label-large);
+    letter-spacing: var(--ls-p-010);
+  }
+
+
+}
