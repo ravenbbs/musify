@@ -35,6 +35,10 @@ const {
     <%- include('../layouts/head', {title: 'Home | Soundfy'}) %>
   </head>
   <body>
+
+    <!-- Recently played -->
+    <%- include('../layouts/recent_played', { recentlyPlayed: locals.recentlyPlayedTracks }) %>
+
     <article class="page custom-scrollbar" data-page>
       <!-- Top app bar -->
       <%- include('../partials/top_bar', locals.currentProfile) %>
