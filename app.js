@@ -17,6 +17,7 @@ const login = require("./src/routes/login.route");
 const auth = require("./src/routes/auth.route");
 const authenticatedUser = require("./src/middlewares/auth_user.middleware");
 const home = require("./src/routes/home.route");
+const explore = require("./src/routes/explore.route");
 
 /**
  * Iniciar Express App
@@ -60,6 +61,13 @@ app.use(authenticatedUser);
  */
 app.use("/", home);
 
+/**
+ * Home page
+ */
+app.use("/explore", explore);
+
+
+//App listener
 app.listen(5000, () => {
   console.log(`Server listening at http://localhost:5000`);
 });
