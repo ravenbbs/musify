@@ -17,10 +17,21 @@ const playerApi = require("../api/player.api");
 const categoryApi = require("../api/category.api");
 
 const explore = async (req, res) => {
-  res.render('./pages/explore')
-}
+  //current user profile
+  const currentProfile = await userApi.getProfile(req);
 
+  //recently played
+  const recentlyPlayed = await playerApi.getRecentlyPlayed(req);
+  const recentlyPlayedTracks = await recentlyPlayed.items.map(
+    ({ track }) => track
+  );
+
+  res.render("./pages/explore", {
+    currentProfile,
+    recentlyPlayedTracks,
+  });
+};
 
 module.exports = {
-  explore
-}
+  explore,
+};

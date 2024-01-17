@@ -1,11 +1,35 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Explore</title>
-</head>
-<body>
-  <div class="">Explore</div>
-</body>
+  <head>
+    <%- include('../layouts/head', {title: 'Explore | Soundfy'}) %>
+  </head>
+  <body>
+    <!-- Recently played -->
+    <%- include('../layouts/recent_played', { 
+        recentlyPlayed:locals.recentlyPlayedTracks }) %>
+
+    <article class="page custom-scrollbar" data-page>
+      <!-- Top app bar -->
+      <%- include('../partials/top_bar', locals.currentProfile) %>
+
+      <!-- Bottom nav  -->
+      <%- include('../partials/bottom_nav', { currentRoute: '/explore' }) %>
+
+      <div class="main" data-main>
+
+        
+
+      </div>
+
+      <!-- Footer -->
+      <%- include('../layouts/footer') %>
+
+      <!-- Player SM -->
+      <%- include('../partials/player_sm') %>
+      
+      <!-- Player LG -->
+      <%- include('../partials/player_lg') %>
+
+    </article>
+  </body>
 </html>
