@@ -26,9 +26,15 @@ const explore = async (req, res) => {
     ({ track }) => track
   );
 
+  // get several categories
+  const categories = await categoryApi.getSeveralDetail(req)
+
+
+
   res.render("./pages/explore", {
     currentProfile,
     recentlyPlayedTracks,
+    categories
   });
 };
 
