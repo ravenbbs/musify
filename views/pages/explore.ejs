@@ -1,3 +1,5 @@
+<% const { item: categoryItem } = locals.categories %>
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -5,8 +7,8 @@
   </head>
   <body>
     <!-- Recently played -->
-    <%- include('../layouts/recent_played', { 
-        recentlyPlayed:locals.recentlyPlayedTracks }) %>
+    <%- include('../layouts/recent_played', {
+    recentlyPlayed:locals.recentlyPlayedTracks }) %>
 
     <article class="page custom-scrollbar" data-page>
       <!-- Top app bar -->
@@ -16,9 +18,24 @@
       <%- include('../partials/bottom_nav', { currentRoute: '/explore' }) %>
 
       <div class="main" data-main>
+        <section class="section">
+          <div class="title-wrapper">
+            <h2 class="title-large section-title">Explore</h2>
+          </div>
+        </section>
 
-        
-
+        <div class="grid-list">
+          <% categoryItem.forEach(({icons, id, name}) => { %> 
+            <% const {url, height, width} = icons[0] %> 
+            <%- include('../partials/category_card',{ 
+              url, 
+              height, 
+              width, 
+              name, 
+              id 
+            }) %> 
+          <% }) %>
+        </div>
       </div>
 
       <!-- Footer -->
@@ -26,10 +43,9 @@
 
       <!-- Player SM -->
       <%- include('../partials/player_sm') %>
-      
+
       <!-- Player LG -->
       <%- include('../partials/player_lg') %>
-
     </article>
   </body>
 </html>
