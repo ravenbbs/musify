@@ -925,6 +925,22 @@
   text-align: right;
 }
 
+/* Pagination */
+
+.pagination {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: var(--space-5);
+  margin-block-start: var(--space-4);
+  color: var(--on-surface-variant);
+  }
+
+  .pagination .btn-wrapper {
+    display: flex;
+  }
+
+
 /* -------------- Media queries ---------------- */
 
 /* 
@@ -942,6 +958,12 @@
   }
 
   /* Reused Style */
+
+  .grid-list {
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  }
+
+  /* Page */
   .page {
     height: auto;
     background-color: var(--background);
@@ -1128,6 +1150,7 @@
     padding-inline: var(--space-6);
   }
 
+  .grid-list,
   .slider-inner {
     gap: var(--space-4);
   }
