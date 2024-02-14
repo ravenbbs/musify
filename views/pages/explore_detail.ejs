@@ -30,7 +30,7 @@ const {
     <%- include('../partials/top_bar', locals.currentProfile) %>
 
     <!-- Bottom nav  -->
-    <%- include('../partials/bottom_nav', { currentRoute: '/explore' }) %>
+    <%- include('../partials/bottom_nav') %>
 
     <!-- Main Content -->
 
@@ -64,13 +64,21 @@ const {
             type: 'playlist',
             title,
             text: description,
-            link: `/playlist/${id}`
+            link: `/playlist/${id}`,
+            uri
           }) %>
 
           <% } %>
           <% }) %>
-
         </div>
+
+        <!-- Pagination -->
+        <%- include('../partials/pagination',{
+          baseUrl,
+          page,
+          ...locals.catPlaylist.playlists
+          }) %>
+
 
       </section>
     </div>
