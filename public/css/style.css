@@ -41,12 +41,14 @@
 .custom-scrollbar::-webkit-scrollbar {
   width: 8px;
 }
+
 .custom-scrollbar::-webkit-scrollbar-thumb {
   background-color: transparent;
-  border-radius: 4px;
 }
+
 .custom-scrollbar:hover::-webkit-scrollbar {
   background-color: var(--surface-container-highest);
+  border-radius: 14px;
 }
 
 .material-symbols-rounded {

@@ -23,9 +23,8 @@
           <div class="title-wrapper">
             <h2 class="title-large section-title">Explore</h2>
           </div>
-        </section>
 
-        <div class="grid-list">
+          <div class="grid-list">
           <% categoryItem.forEach(({icons, id, name}) => { %> 
             <% const {url, height, width} = icons[0] %> 
             <%- include('../partials/category_card',{ 
@@ -36,7 +35,13 @@
               id 
             }) %> 
           <% }) %>
+
         </div>
+        
+        <!-- Pagination -->
+        <%- include('../partials/pagination', locals.categories) %>
+
+        </section>
       </div>
 
       <!-- Footer -->
