@@ -18,6 +18,15 @@ const auth = require("./src/routes/auth.route");
 const authenticatedUser = require("./src/middlewares/auth_user.middleware");
 const home = require("./src/routes/home.route");
 const explore = require("./src/routes/explore.route");
+const album = require("./src/routes/album.route");
+
+const logout = require("./src/routes/logout.route");
+
+const profile = require("./src/routes/profile.route");
+const playlist = require("./src/routes/playlist.route");
+const artist = require("./src/routes/artist.route");
+const search = require("./src/routes/search.route");
+const track = require("./src/routes/track.route");
 
 /**
  * Iniciar Express App
@@ -62,9 +71,15 @@ app.use(authenticatedUser);
 app.use("/", home);
 
 /**
- * Home page
+ * Explore page
  */
 app.use("/explore", explore);
+
+/**
+ * Album page
+ */
+app.use("/album", album);
+
 
 
 //App listener

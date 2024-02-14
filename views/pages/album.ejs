@@ -1,7 +1,8 @@
+<%  %>
 <!DOCTYPE html>
 <html lang="es">
   <head>
-    <%- include('../layouts/head', {title: 'Albums | Soundfy'}) %>
+    <%- include('../layouts/head', {title: `${locals.title} | Soundfy`}) %>
   </head>
   <body>
     <!-- Recently played -->
@@ -13,12 +14,23 @@
       <%- include('../partials/top_bar', locals.currentProfile) %>
 
       <!-- Bottom nav  -->
-      <%- include('../partials/bottom_nav', { currentRoute: '/albums' }) %>
+      <%- include('../partials/bottom_nav', { currentRoute: '/album' }) %>
 
       <div class="main" data-main>
-
-        
-
+        <section class="section">
+          <div class="title-wrapper">
+            <h2 class="title-large section-title">
+              <%=locals.title%>
+            </h2>
+          </div>
+  
+          <div class="grid-list">
+  
+          </div>
+  
+          <!-- Pagination -->
+          <%- include('../partials/pagination', locals.categories) %>
+        </section>
       </div>
 
       <!-- Footer -->
