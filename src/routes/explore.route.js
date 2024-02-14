@@ -14,8 +14,10 @@ const router = require('express').Router()
 /**
  * Custom modules
  */
-const {explore} = require('../controllers/explore.controller')
+const {explore, exploreDetail} = require('../controllers/explore.controller')
 
 router.get(['/', '/page/:page'], explore)
+
+router.get('/:categoryId', exploreDetail)
 
 module.exports = router

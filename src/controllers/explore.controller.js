@@ -38,6 +38,26 @@ const explore = async (req, res) => {
   });
 };
 
+const exploreDetail = async (req, res) => {
+    //current user profile
+    const currentProfile = await userApi.getProfile(req);
+
+    //recently played
+    const recentlyPlayed = await playerApi.getRecentlyPlayed(req);
+    const recentlyPlayedTracks = await recentlyPlayed.items.map(
+      ({ track }) => track
+    );
+
+    res.render("./pages/explore_detail", {
+      currentProfile,
+      recentlyPlayedTracks,
+    });
+  
+
+}
+
+
 module.exports = {
   explore,
+  exploreDetail
 };
