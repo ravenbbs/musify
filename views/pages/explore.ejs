@@ -2,56 +2,59 @@
 
 <!DOCTYPE html>
 <html lang="es">
-  <head>
-    <%- include('../layouts/head', {title: 'Explore | Soundfy'}) %>
-    <link rel="stylesheet" href="/css/explore.css">
-  </head>
-  <body>
-    <!-- Recently played -->
-    <%- include('../layouts/recent_played', {
+
+<head>
+  <%- include('../layouts/head', {title: 'Explore | Soundfy'}) %>
+  <link rel="stylesheet" href="/css/explore.css">
+</head>
+
+<body>
+  <!-- Recently played -->
+  <%- include('../layouts/recent_played', {
     recentlyPlayed:locals.recentlyPlayedTracks }) %>
 
-    <article class="page custom-scrollbar" data-page>
-      <!-- Top app bar -->
-      <%- include('../partials/top_bar', locals.currentProfile) %>
+  <article class="page custom-scrollbar" data-page>
+    <!-- Top app bar -->
+    <%- include('../partials/top_bar', locals.currentProfile) %>
 
-      <!-- Bottom nav  -->
-      <%- include('../partials/bottom_nav', { currentRoute: '/explore' }) %>
+    <!-- Bottom nav  -->
+    <%- include('../partials/bottom_nav', { currentRoute: '/explore' }) %>
 
-      <div class="main" data-main>
-        <section class="section">
-          <div class="title-wrapper">
-            <h2 class="title-large section-title">Explore</h2>
-          </div>
+    <div class="main" data-main>
+      <section class="section">
+        <div class="title-wrapper">
+          <h2 class="title-large section-title">Explore</h2>
+        </div>
 
-          <div class="grid-list">
-          <% categoryItem.forEach(({icons, id, name}) => { %> 
-            <% const {url, height, width} = icons[0] %> 
-            <%- include('../partials/category_card',{ 
+        <div class="grid-list">
+          <% categoryItem.forEach(({icons, id, name}) => { %>
+          <% const {url, height, width} = icons[0] %>
+          <%- include('../partials/category_card',{ 
               url, 
               height, 
               width, 
               name, 
               id 
-            }) %> 
+            }) %>
           <% }) %>
 
         </div>
-        
+
         <!-- Pagination -->
         <%- include('../partials/pagination', locals.categories) %>
 
-        </section>
-      </div>
+      </section>
+    </div>
 
-      <!-- Footer -->
-      <%- include('../layouts/footer') %>
+    <!-- Footer -->
+    <%- include('../layouts/footer') %>
 
-      <!-- Player SM -->
-      <%- include('../partials/player_sm') %>
+    <!-- Player SM -->
+    <%- include('../partials/player_sm') %>
 
-      <!-- Player LG -->
-      <%- include('../partials/player_lg') %>
-    </article>
-  </body>
+    <!-- Player LG -->
+    <%- include('../partials/player_lg') %>
+  </article>
+</body>
+
 </html>

@@ -151,14 +151,31 @@ $bottomNavItems && addEventOnElems($bottomNavItems, "click", activeNavItem);
 /**
  * Player modal toggle
  */
-const /** {HTMLElement} */  $modalPlayer = document.querySelector('[data-modal-player]')
-const /** {Array<HTMLElement>} */ $modalPlayerTogglers = document.querySelectorAll('[data-modal-player-toggler]')
-const /** {HTMLElement} */  $modalPlayerOverlay = document.querySelector('[data-player-overlay]')
+const /** {HTMLElement} */ $modalPlayer = document.querySelector(
+    "[data-modal-player]"
+  );
+const /** {Array<HTMLElement>} */ $modalPlayerTogglers =
+    document.querySelectorAll("[data-modal-player-toggler]");
+const /** {HTMLElement} */ $modalPlayerOverlay = document.querySelector(
+    "[data-player-overlay]"
+  );
 
 const toggleModalPlayer = function () {
-  $modalPlayer.classList.toggle('active')
-  $modalPlayerOverlay.classList.toggle('active')
+  $modalPlayer.classList.toggle("active");
+  $modalPlayerOverlay.classList.toggle("active");
+};
 
-}
+$modalPlayerTogglers &&
+  addEventOnElems($modalPlayerTogglers, "click", toggleModalPlayer);
 
-$modalPlayerTogglers && addEventOnElems($modalPlayerTogglers, 'click', toggleModalPlayer)
+// Back and forward functionality
+const backBtn = document.querySelector("[data-back-btn]");
+const forwardBtn = document.querySelector("[data-forward-btn");
+
+backBtn?.addEventListener("click", function () {
+  window.history.back();
+});
+
+forwardBtn?.addEventListener("click", function () {
+  window.history.forward();
+});
