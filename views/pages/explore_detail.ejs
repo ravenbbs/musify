@@ -1,9 +1,22 @@
+<% 
+//category info
+const { name: categoryName } = locals.catInfo;
+
+// category playlist
+const { 
+  playlists: { items: catePlaylistItems },
+  page,
+  baseUrl
+
+} = locals.catPlaylist;
+
+%>
 
 <!DOCTYPE html>
 <html lang="es">
 
 <head>
-  <%- include('../layouts/head', {title: 'Explore detail | Soundfy'}) %>
+  <%- include('../layouts/head', {title: `Explore ${categoryName} | Soundfy`}) %>
   <link rel="stylesheet" href="/css/explore.css">
 </head>
 
@@ -19,7 +32,49 @@
     <!-- Bottom nav  -->
     <%- include('../partials/bottom_nav', { currentRoute: '/explore' }) %>
 
-    
+    <!-- Main Content -->
+
+    <div class="main" data-main>
+      <section class="section">
+        <div class="title-wrapper">
+          <h2 class="title-large section-title">
+            <%= categoryName %>
+          </h2>
+        </div>
+
+        <div class="grid-list">
+
+          <% catePlaylistItems.forEach(item => { %>
+          <% if (item !== null) { %>
+
+          <% 
+            const { 
+              id, 
+              images, 
+              name: title, 
+              description, 
+              uri 
+              } = item; 
+            
+            const [image] = images || []; 
+          %>
+
+          <%- include('../partials/card', { 
+            image,
+            type: 'playlist',
+            title,
+            text: description,
+            link: `/playlist/${id}`
+          }) %>
+
+          <% } %>
+          <% }) %>
+
+        </div>
+
+      </section>
+    </div>
+
 
     <!-- Footer -->
     <%- include('../layouts/footer') %>
