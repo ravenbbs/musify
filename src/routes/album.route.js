@@ -13,8 +13,10 @@ const router = require('express').Router()
 /**
  * Custom modules
  */
-const { album } = require('../controllers/album.controller')
+const { album, albumDetail } = require('../controllers/album.controller')
 
 router.get(['/', '/page/:page'], album)
+
+router.get('/:albumId' , albumDetail)
 
 module.exports = router
