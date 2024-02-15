@@ -1139,7 +1139,6 @@
   .search-bar {
     position: static;
     max-width: 480px;
-    overflow: hidden;
   }
 
   .search-bar:has(.search-field:not(:placeholder-shown)) .menu-wraper {
