@@ -1,4 +1,8 @@
 <% 
+//album 
+const {
+  items: albumItems
+} = locals.albums;  
 
 %>
 <!DOCTYPE html>
@@ -27,7 +31,32 @@
           </div>
   
           <div class="grid-list">
-  
+            <% albumItems.forEach(item => { %>
+              <% if (item !== null) { %>
+    
+              <% 
+                const { 
+                  id, 
+                  images, 
+                  name: title, 
+                  description, 
+                  uri 
+                  } = item; 
+                
+                const [image] = images || []; 
+              %>
+    
+              <%- include('../partials/card', { 
+                image,
+                type: 'album',
+                title,
+                text: description,
+                link: `/album/${id}`,
+                uri
+              }) %>
+    
+              <% } %>
+              <% }) %>
           </div>
   
           <!-- Pagination -->
