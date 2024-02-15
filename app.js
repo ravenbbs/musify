@@ -14,14 +14,14 @@ const cookieParser = require("cookie-parser");
  * custom modules
  */
 const login = require("./src/routes/login.route");
+const logout = require("./src/routes/logout.route");
+
 const auth = require("./src/routes/auth.route");
 const authenticatedUser = require("./src/middlewares/auth_user.middleware");
 const home = require("./src/routes/home.route");
 const explore = require("./src/routes/explore.route");
 const album = require("./src/routes/album.route");
 const playlist = require("./src/routes/playlist.route");
-
-const logout = require("./src/routes/logout.route");
 
 const profile = require("./src/routes/profile.route");
 const artist = require("./src/routes/artist.route");
@@ -84,6 +84,11 @@ app.use("/album", album);
  * Album page
  */
 app.use("/playlist", playlist);
+
+/**
+ * Profile page
+ */
+app.use("/me", profile);
 
 
 //App listener
