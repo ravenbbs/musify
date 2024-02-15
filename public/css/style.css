@@ -330,7 +330,7 @@
 .copyright {
   display: grid;
   color: var(--on-surface-variant);
-  padding-block: var(--space-4) ;
+  padding-block: var(--space-4);
   gap: var(--space-05);
 }
 
@@ -712,7 +712,7 @@
   --state-layer-bg: var(--on-surface);
 }
 
-.btn.has-icon{
+.btn.has-icon {
   padding-inline-start: var(--space-4);
 }
 
@@ -1078,9 +1078,30 @@
     grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
   }
 
-  .header-hide .list-header, .list-header {
+  .header-hide .list-header,
+  .list-header {
     top: var(--top-bar-height);
   }
+
+  .detail-header {
+    padding-block: var(--space-6);
+  }
+
+  .detail-banner {
+    width: 240px;
+    height: 240px;
+  }
+
+  .detail-banner {
+    font-size: var(--fs-display-large);
+    line-height: var(--lh-display-large);
+    margin-block: var(--space-3);
+  }
+
+  .detail-actions {
+    padding-block-start: var(--space-6);
+  }
+
 
   /* Page */
   .page {
@@ -1274,6 +1295,19 @@
     gap: var(--space-4);
   }
 
+  .list-header-active .list-header {
+    margin-inline: -24px;
+    padding-inline: var(--space-10);
+  }
+
+  .list-header :where(.number-col, .album-col) {
+    display: block;
+  }
+
+  .list-header .album-col {
+    margin-inline-start: 88px;
+  }
+
   /* Page */
 
   .page,
@@ -1315,6 +1349,14 @@
   .slider .card {
     min-width: 180px;
     max-width: 180px;
+  }
+
+  .detail-header {
+    flex-wrap: nowrap;
+  }
+
+  .detail-banner {
+    flex-shrink: 0;
   }
 
   /* -------- Components --------- */
