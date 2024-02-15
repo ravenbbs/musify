@@ -10,6 +10,7 @@
  * */
 const apiConfig = require("../config/api.config");
 const { getData } = require('../config/axios.config')
+const { getUrlQuery } = require('../utils/helpers.util');
 
 /**
  * Get Spotify catalog information for several artist based on their Spotify IDs
@@ -23,6 +24,26 @@ const getSeveralDetail = async (req, artistIds) => {
   return  trackArtists
 }
 
+/**
+ * Get spotify catalog information about an artist albums
+ * @param {Object} req - server request object
+ * @param {number} itemLimit - the maximum number of items to return. defaults: 30
+ * @param {string} id - the spotify ID of the artist
+ */
+const getAlbum = async (req, itemLimit, id) => {
+  const {offset, limit, page} = getUrlQuery(req.params, itemLimit)
+  const { artistId = id} = req.params;
+
+  const { data: artistAlbum } = await getData(`/artists/${artistId}/albums?limit=${limit}&offset=${offset}`, req.cookies.access_token)
+
+  const /** {string} */ baseUrl = `${req.baseUrl}/${artistId}/album`
+
+  return { baseUrl, page, ...artistAlbum}
+
+}
+
+
 module.exports = {
-  getSeveralDetail
+  getSeveralDetail,
+  getAlbum
 }
