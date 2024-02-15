@@ -30,6 +30,22 @@ const getNewRelease = async (req, itemLimit) => {
   return { baseUrl: req.baseUrl, page, ...newRelease };
 };
 
+/**
+ * Get a spotify catalog information about an artist album
+ * @param {Object} req - server request object
+ * @returns {Object} 
+ */
+const getDetail = async (req) => {
+
+  const { albumId } = req.params
+
+  const { data: albumDetail} = await getData(`/albums/${albumId}`, req.cookies.access_token)
+
+  return albumDetail
+
+}
+
 module.exports = {
   getNewRelease,
+  getDetail,
 };
