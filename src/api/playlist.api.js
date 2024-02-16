@@ -47,7 +47,16 @@ const getCategoryPlaylist = async (req, itemLimit) => {
   return { baseUrl, page, ...catPlaylist };
 };
 
+const getDetail = async (req) => {
+  const { playlistId } = req.params
+
+  const { data: playlistDetail } = await getData(`/playlist/${playlistId}?fields=description,external_urls,followers(total),id,images,name,owner(display_name),tracks(total,items(track(album(images,name),artist,duration_ms,name,id,uri))),type,uri`, req.cookies.access_token )
+
+  return playlistDetail
+}
+
 module.exports = {
+  getDetail,
   getFeatured,
   getCategoryPlaylist,
 };
