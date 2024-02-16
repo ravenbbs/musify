@@ -68,7 +68,7 @@ const {
       <!-- Album detail -->
       <section class="detail-header">
         <figure class="img-holder detail-banner">
-          <img src="<%=detailBanner%>" alt="<%=albumName%>" height="<%=detailBannerHeight%>" width="<%=detailBannerWidth%>" class="img-cover">
+          <img src="<%=detailBanner%>" alt="<%=albumName%>" height="<%=detailBannerHeight%>" width="<%=detailBannerWidth%>" class="img-cover" data-image-load-anim>
         </figure>
 
         <div class="detail-content">
@@ -146,9 +146,6 @@ const {
               }) %>
           <% }) %>
         </div>
-
-
-
       </section>
 
       <!-- Album Copyright -->
@@ -202,8 +199,6 @@ const {
 
         </section>
       <% } %>
-
-
     </div>
 
     <!-- Footer -->
