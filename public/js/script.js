@@ -77,7 +77,7 @@ const ripple = function ($rippleElem) {
         {
           opacity: 0,
         },
-        { fill: "forwards", duration: 200 }
+        { fill: "forwards", duration: 300 }
       );
 
       setTimeout(() => {
@@ -98,7 +98,7 @@ const ripple = function ($rippleElem) {
   });
 };
 const /** {HTMLElement} */ $rippleElems =
-    document.querySelectorAll("[data-rippler]");
+    document.querySelectorAll("[data-ripple]");
 $rippleElems?.forEach((item) => ripple(item));
 
 /**

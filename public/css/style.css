@@ -111,7 +111,7 @@
   border-radius: var(--radius-full);
   opacity: 0.12;
   filter: blur(20px);
-  animation: ripple 500ms var(--tr-easing-standard) forwards;
+  animation: ripple 800ms var(--tr-easing-standard) forwards;
 }
 
 @keyframes ripple {
