@@ -4,14 +4,15 @@ const {
     description,
     followers: { total: totalFollowers},
     external_urls: { spotify: spotifyUrl },
-    images: playlistDetailImages
+    images: playlistDetailImages,
     name: playlistName,
     owner: { display_name: ownerName },
-    tracks: { total: totalTracks, items: playlistTracks}
+    tracks: { total: totalTracks, items: playlistTracks},
     type: playlistType,
     uri: playlistUri
   } = locals.playlistDetail
 
+  
   const {
     url: detailBanner = '/images/playlist-banner.png',
     width: detailBannerWidth = 300,
@@ -53,35 +54,35 @@ const {
 
         <div class="detail-content">
           <p class="label-large detail-subtitle">
-            <%= album_type %>
+            <%=playlistType%>
           </p>
 
           <h2 class="headline-large detail-title">
-            <%= albumName %>
+            <%=playlistName%>
           </h2>
 
+          <p class="body-medium detail-text">
+            <%-description%>
+          </p>
+
           <div class="detail-text has-separator">
-            <% artists.forEach(({name}) => {  %>
             <p class="label-large">
-              <%=name%>
+              By <%= ownerName %>
             </p>
             <span class="separator"></span>
-
             <p class="label-large">
-              <%= new Date(release_date).getFullYear() %>
+              <%= totalFollowers %> Likes
             </p>
             <span class="separator"></span>
-
             <p class="label-large">
-              <%= total_tracks %>
+              <%= totalTracks %> Músicas
             </p>
-            <% }) %>
           </div>
 
           <div class="detail-actions">
             <%-include('../partials/play_btn', {
               variant: 'filled',
-              dataAttr: `data-uri="${albumUri}"`
+              dataAttr: `data-uri="${playlistUri}"`
             })%>
 
             <a href="<%=spotifyUrl%>" target="_blank" class="btn btn-outline has-icon" data-ripple>
@@ -104,6 +105,7 @@ const {
 
           <div class="number-col body-large">#</div>
           <div class="col body-large">Title</div>
+          <div class="col album-col body-large">Album</div>
           <div class="duration-col">
             <span class="material-symbols-rounded">schedule</span>
           </div>
@@ -111,79 +113,36 @@ const {
         </div>
 
         <div class="list">
-          <%albumTracks.forEach(({ artists, duration_ms, id, name: title, uri, trackUri}, index) => {%>
+          <%playlistTracks.forEach((item , index) => { %>
+
             <% 
+              const {
+                album: {name: albumName, images},
+                artists,
+                duration_ms,
+                id,
+                name: title,
+                uri: trackUri,
+              } = item.track;
+
               const text = artists.map(({name}) => name).join(', ');
               index++;
             %>
+
             <%- include('../partials/list_item', {
+              images,
               title,
               text,
+              albumName,
               duration_ms,
               id,
               trackNumber: index,
               trackUri
               }) %>
+
           <% }) %>
         </div>
-
-
-
       </section>
-
-      <!-- Album Copyright -->
-      <section class="copyright">
-        <p class="body-medium">
-          <%=new Date(release_date).toDateString()%>
-        </p>
-        <% copyrights.forEach(({ text }) => { %> 
-          <p class="label-small"><%=text%></p>
-        <% }) %> 
-      </section>
-
-      <!-- More by artist -->
-      <% if (moreAlbum.length) { %>
-        <section class="section">
-          <% const { name, id } = firstArtist %>
-
-          <div class="title-wrapper">
-            <h2 class="title-large section-title">
-              Mas de <%=name%>
-            </h2>
-
-            <% if (moreByArtistNext !== null) { %>
-              <a href="/artist/<%=id%>/album" class="btn btn-link" data-ripple>
-                <span class="label-large"> Ver discografía</span>
-              </a>  
-              <div class="state-layer"></div>
-                
-  
-            <% } %>
-          </div>
-
-          <div class="slider" data-slider>
-            <div class="slider-inner">
-              <% moreAlbum.forEach(({ id, images, name: title, release_date, uri}) => { %> 
-                <% 
-                  const text = new Date(release_date).getFullYear();
-                  const image = images.find(item => item.width === 300)
-                %>
-                <%- include('../partials/card', { 
-                  image,
-                  type: 'album',
-                  title,
-                  text,
-                  link: `/album/${id}`,
-                  uri
-                  }) %>   
-              <% }) %>  
-            </div>
-          </div>
-
-        </section>
-      <% } %>
-
-
     </div>
 
     <!-- Footer -->
