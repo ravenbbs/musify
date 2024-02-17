@@ -43,7 +43,30 @@ const profile = async (req, res) => {
       });
 }
 
+const topArtist = async (req, res) => {
+        //current user profile
+        const currentProfile = await userApi.getProfile(req);
+
+        //recently played
+        const recentlyPlayed = await playerApi.getRecentlyPlayed(req);
+        const recentlyPlayedTracks = await recentlyPlayed.items.map(
+          ({ track }) => track
+        );
+  
+        // current user top artist
+        const userTopArtist = await userApi.getTopArtist(req, 21); 
+  
+        res.render("./pages/user_top_artist", {
+          currentProfile,
+          recentlyPlayedTracks,
+          artists: userTopArtist,
+          title: 'Tu top artistas'
+        });
+
+}
+
 
 module.exports = {
-  profile
+  profile,
+  topArtist
 }
