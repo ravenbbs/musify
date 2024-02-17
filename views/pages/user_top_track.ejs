@@ -1,0 +1,72 @@
+<% 
+// user top artist
+const {
+  items: artistItems,
+  limit,
+  page
+} = locals.tracks
+
+%>
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <%- include('../layouts/head', {title: `${locals.title} | Soundfy`}) %>
+  </head>
+  <body>
+    <!-- Recently played -->
+    <%- include('../layouts/recent_played', { 
+        recentlyPlayed:locals.recentlyPlayedTracks }) %>
+
+    <article class="page custom-scrollbar" data-page>
+      <!-- Top app bar -->
+      <%- include('../partials/top_bar', locals.currentProfile) %>
+
+      <!-- Bottom nav  -->
+      <%- include('../partials/bottom_nav') %>
+
+      <div class="main" data-main>
+        <section class="section">
+          <div class="title-wrapper">
+            <h2 class="title-large section-title">
+              <%=locals.title%>
+            </h2>
+          </div>
+  
+          <div class="list">
+
+            <% artistItems.forEach(({album: {images, name: albumName}, artists, name, duration_ms, id, uri: trackUri}, index) => { %>
+              <% 
+                const text = artists.map(({ name }) => name).join(', ');
+                index = (index + 1) + (limit * (page - 1));
+              %>
+              <%- include('../partials/list_item', { 
+                title: name,
+                images,
+                text,
+                duration_ms,
+                id,
+                trackNumber: index,
+                albumName,
+                trackUri
+              }) %>
+            <% }) %>
+
+          </div>
+  
+          <!-- Pagination -->
+          <%- include('../partials/pagination', locals.tracks ) %>
+        </section>
+      </div>
+
+      <!-- Footer -->
+      <%- include('../layouts/footer') %>
+
+      <!-- Player SM -->
+      <%- include('../partials/player_sm') %>
+      
+      <!-- Player LG -->
+      <%- include('../partials/player_lg') %>
+
+    </article>
+  </body>
+</html>
