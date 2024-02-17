@@ -334,6 +334,10 @@
   gap: var(--space-05);
 }
 
+.divider .variant {
+  background-color: var(--outline-variant);
+}
+
 /*
 #Components
 */
@@ -967,10 +971,10 @@
   content: "";
   position: absolute;
   top: 50%;
-  left: 0;
+  left: 25%;
   transform: translateY(-50%);
-  width: 16px;
-  height: 16px;
+  width: 50%;
+  height: 50%;
   background-image: url("/images/playing.gif");
   background-repeat: no-repeat;
   background-size: contain;
@@ -1331,6 +1335,21 @@
   .menu-wraper {
     right: var(--space-6);
   }
+
+  /* List item*/
+
+  .item-number, .item-album { display: block;}
+
+  .item-list .item-number { 
+    min-width: 28px;  
+  }
+
+  .list-item .item-content {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) 42px;
+  }
+
+
+
 }
 
 /* 
