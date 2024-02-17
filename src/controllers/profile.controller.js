@@ -24,9 +24,22 @@ const profile = async (req, res) => {
         ({ track }) => track
       );
 
+      // current user top artist
+      const userTopArtist = await userApi.getTopArtist(req, apiConfig.LOW_LIMIT);
+
+      //current user top tracks
+      const userTopTracks = await userApi.getTopTracks(req, 6);
+
+      //current user followed artist
+      const userFollowedArtist = await userApi.getFollowedArtist(req)
+
       res.render("./pages/profile", {
         currentProfile,
         recentlyPlayedTracks,
+        userTopArtist,
+        userTopTracks,
+        userFollowedArtist,
+        msToTimeCode
       });
 }
 
