@@ -108,9 +108,9 @@ app.use("/track", track);
 /**
  * 404 page
  */
-app.use((res, req) => {
-  res.render("./pages/404" );
-});
+// app.use((res, req) => {
+//   res.render("./pages/404" );
+// });
 
 //App listener
 app.listen(5000, () => {
