@@ -54,7 +54,7 @@ const topArtist = async (req, res) => {
         );
   
         // current user top artist
-        const userTopArtist = await userApi.getTopArtist(req, 21); 
+        const userTopArtist = await userApi.getTopArtist(req, 25); 
   
         res.render("./pages/user_top_artist", {
           currentProfile,
@@ -65,8 +65,33 @@ const topArtist = async (req, res) => {
 
 }
 
+const topTrack = async (req, res) => {
+  //current user profile
+  const currentProfile = await userApi.getProfile(req);
+
+  //recently played
+  const recentlyPlayed = await playerApi.getRecentlyPlayed(req);
+  const recentlyPlayedTracks = await recentlyPlayed.items.map(
+    ({ track }) => track
+  );
+
+  //current user top tracks
+  const userTopTracks = await userApi.getTopTracks(req, 50);
+
+
+  res.render("./pages/user_top_track", {
+    currentProfile,
+    recentlyPlayedTracks,
+    tracks: userTopTracks,
+    title: 'Tu top músicas',
+    msToTimeCode
+  });
+
+}
+
 
 module.exports = {
   profile,
-  topArtist
+  topArtist,
+  topTrack
 }
