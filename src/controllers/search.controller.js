@@ -42,7 +42,30 @@ const searchAll = async (req, res) => {
 
 }
 
+const searchAlbum = async(req, res) => {
+        //current user profile
+        const currentProfile = await userApi.getProfile(req);
+
+        //recently played
+        const recentlyPlayed = await playerApi.getRecentlyPlayed(req);
+        const recentlyPlayedTracks = await recentlyPlayed.items.map(
+          ({ track }) => track
+        );
+  
+        // search result
+        const searchAlbum = await searchApi.getAlbum(req);
+  
+        res.render("./pages/search_album", {
+          currentProfile,
+          recentlyPlayedTracks,
+          query: req.params.query,
+          type: 'album',
+          searchAlbum,
+        });
+}
+
 module.exports = {
   searchRequest,
-  searchAll
+  searchAll,
+  searchAlbum
 }
