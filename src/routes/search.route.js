@@ -14,9 +14,9 @@ const router = require('express').Router()
 /**
  * Custom modules
  */
-const { playlist } = require('../controllers/playlist.controller')
+const { searchRequest, searchAll } = require('../controllers/search.controller')
 
-router.get(['/', '/page/:page'], playlist )
-
+router.post('/', searchRequest )
+router.get('/all/:query', searchAll )
 
 module.exports = router

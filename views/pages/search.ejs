@@ -1,0 +1,122 @@
+<% 
+//search all
+const {
+
+  albums: {
+    total: totalSearchAlbum,
+    items: searchAlbumItems
+  },
+  artists: {
+    total: totalSearchArtist,
+    items: searchArtistItems
+  },
+  tracks: {
+    total: totalSearchTracks,
+    items: searchTrackItems
+  },
+  playlists: {
+    total: totalSearchPlaylist,
+    items: searchPlaylistItems
+  }
+} = locals.searchAll
+%>
+
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <%- include('../layouts/head', {title: `Search | Soundfy`}) %>
+  </head>
+  <body>
+    <!-- Recently played -->
+    <%- include('../layouts/recent_played', { 
+        recentlyPlayed:locals.recentlyPlayedTracks }) %>
+
+    <article class="page custom-scrollbar" data-page>
+
+      <!-- Top app bar -->
+      <%- include('../partials/top_bar', {...locals.currentProfile, query}) %>
+
+      <!-- Bottom nav  -->
+      <%- include('../partials/bottom_nav') %>
+
+      <!-- Search filter list -->
+      <%- include('../layouts/search_filter', {
+        searchAll: locals.searchAll,
+        type: locals.type
+      }) %>
+
+      <div class="main" data-main>
+
+        <!-- Tracks -->
+        <% if (totalSearchTracks) { %>
+          <section class="section">
+            <div class="title-wrapper">
+              <h2 class="title-wrapper section-title">
+                Músicas
+              </h2>
+            </div>
+
+            <div class="list">
+              <% searchTrackItems.forEach(({ album: {images}, artists, duration_ms, id, name: title, uri: trackUri}) => { %>
+              
+                <% 
+                  const text = artists.map(({ name }) => name).join(', ');
+                %>
+                <%- include('../partials/list_item', { 
+                  title,
+                  images,
+                  text,
+                  duration_ms,
+                  id,
+                  trackUri
+                }) %>
+
+              <% }) %>
+            </div>
+          </section>
+        <% } %>
+
+        <!-- Albums -->
+        <% if (totalSearchAlbum) { %>
+          <section class="section">
+            <div class="title-wrapper">
+              <h2 class="title-wrapper section-title">
+                Músicas
+              </h2>
+            </div>
+
+            <div class="list">
+              <% searchAlbumItems.forEach(({ album: {images}, artists, duration_ms, id, name: title, uri: trackUri}) => { %>
+              
+                <% 
+                  const text = artists.map(({ name }) => name).join(', ');
+                %>
+                <%- include('../partials/list_item', { 
+                  title,
+                  images,
+                  text,
+                  duration_ms,
+                  id,
+                  trackUri
+                }) %>
+
+              <% }) %>
+            </div>
+          </section>
+        <% } %>
+
+
+      </div>
+
+      <!-- Footer -->
+      <%- include('../layouts/footer') %>
+
+      <!-- Player SM -->
+      <%- include('../partials/player_sm') %>
+      
+      <!-- Player LG -->
+      <%- include('../partials/player_lg') %>
+
+    </article>
+  </body>
+</html>
