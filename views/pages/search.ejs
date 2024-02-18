@@ -26,13 +26,23 @@ const {
   <head>
     <%- include('../layouts/head', {title: `Search | Soundfy`}) %>
   </head>
+  <style media="(min-width: 992px)">
+    .list{
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .list-item .item-content {
+      grid-template-columns: minmax(0, 1fr) 42px;
+    }
+
+  </style>
   <body>
     <!-- Recently played -->
     <%- include('../layouts/recent_played', { 
         recentlyPlayed:locals.recentlyPlayedTracks }) %>
 
     <article class="page custom-scrollbar" data-page>
-
       <!-- Top app bar -->
       <%- include('../partials/top_bar', {...locals.currentProfile, query}) %>
 
@@ -46,7 +56,7 @@ const {
       }) %>
 
       <div class="main" data-main>
-
+        
         <!-- Tracks -->
         <% if (totalSearchTracks) { %>
           <section class="section">
@@ -81,30 +91,107 @@ const {
           <section class="section">
             <div class="title-wrapper">
               <h2 class="title-wrapper section-title">
-                Músicas
+                Albums
               </h2>
             </div>
 
-            <div class="list">
-              <% searchAlbumItems.forEach(({ album: {images}, artists, duration_ms, id, name: title, uri: trackUri}) => { %>
-              
-                <% 
-                  const text = artists.map(({ name }) => name).join(', ');
-                %>
-                <%- include('../partials/list_item', { 
-                  title,
-                  images,
-                  text,
-                  duration_ms,
-                  id,
-                  trackUri
-                }) %>
+            <div class="slider" data-slider>
+              <div class="slider-inner">
+                <% searchAlbumItems.forEach(({id, images, name: title, artists, release_date, uri}) => { %>
 
-              <% }) %>
+                  <% 
+                  const year = new Date(release_date).getFullYear();
+                  const text = artists.map(({name}) => name).join(', ');
+                  const image = images.find(item => item.width === 300);
+                  %>
+
+                  <%- include('../partials/card', { 
+                    image,
+                    type: 'album',
+                    title,
+                    text,
+                    year,
+                    link: `/album/${id}`,
+                    uri
+                  }) %>
+
+                <% }) %>
+
+              </div>
             </div>
+            
           </section>
         <% } %>
 
+        <!-- Artists -->
+        <% if (totalSearchArtist) { %>
+          <section class="section">
+            <div class="title-wrapper">
+              <h2 class="title-wrapper section-title">
+                Artistas
+              </h2>
+            </div>
+
+            <div class="slider" data-slider>
+              <div class="slider-inner">
+                <% searchArtistItems.forEach(({name: title, id, images, type, uri}) => { %>
+
+                  <% 
+                  const [image] = images || []; 
+                  %>
+
+                  <%- include('../partials/card', {
+                    variant: 'artist-card',
+                    image,
+                    type: 'artist',
+                    title,
+                    text: type,
+                    link: `/artist/${id}`,
+                    uri
+                  }) %>
+
+                <% }) %>
+
+              </div>
+            </div>
+            
+          </section>
+        <% } %>
+
+        <!-- Playlist -->
+        <% if (totalSearchPlaylist) { %>
+          <section class="section">
+            <div class="title-wrapper">
+              <h2 class="title-wrapper section-title">
+                Playlists
+              </h2>
+            </div>
+
+            <div class="slider" data-slider>
+              <div class="slider-inner">
+                <% searchPlaylistItems.forEach(({ id, images, name: title, owner, uri }) => { %>
+
+                  <% 
+                  const text = `By ${owner.display_name}`
+                  const [image] = images || []; 
+                  %>
+
+                  <%- include('../partials/card', {
+                    image,
+                    type: 'playlist',
+                    title,
+                    text: type,
+                    link: `/playlist/${id}`,
+                    uri
+                  }) %>
+
+                <% }) %>
+
+              </div>
+            </div>
+            
+          </section>
+        <% } %>
 
       </div>
 
