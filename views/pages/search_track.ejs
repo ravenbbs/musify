@@ -1,7 +1,9 @@
 <% 
 //search album
 const {
-  items: searchTrackItems
+  items: searchTrackItems,
+  limit,
+  page
 }= locals.searchTracks
 %>
 
@@ -30,20 +32,21 @@ const {
         
         <section class="section">
           <div class="list">
-            <% searchTrackItems.forEach(({ album: {images}, artists, duration_ms, id, name: title, uri: trackUri}) => { %>
-              
+            <% searchTrackItems.forEach(({album: {images, name: albumName}, artists, name, duration_ms, id, uri: trackUri}, index) => { %>
               <% 
                 const text = artists.map(({ name }) => name).join(', ');
+                index = (index + 1) + (limit * (page - 1));
               %>
               <%- include('../partials/list_item', { 
-                title,
+                title: name,
                 images,
                 text,
                 duration_ms,
                 id,
+                trackNumber: index,
+                albumName,
                 trackUri
               }) %>
-
             <% }) %>
           </div>
 
