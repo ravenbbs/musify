@@ -109,6 +109,27 @@ const searchArtist = async(req, res) => {
   });
 }
 
+const searchPlaylist = async(req, res) => {
+  //current user profile
+  const currentProfile = await userApi.getProfile(req);
+
+  //recently played
+  const recentlyPlayed = await playerApi.getRecentlyPlayed(req);
+  const recentlyPlayedTracks = await recentlyPlayed.items.map(
+    ({ track }) => track
+  );
+
+  // search result
+  const searchPlaylist = await searchApi.getPlaylist(req);
+
+  res.render("./pages/search_playlist", {
+    currentProfile,
+    recentlyPlayedTracks,
+    query: req.params.query,
+    type: 'playlists',
+    searchPlaylist,
+  });
+}
 
 
 
