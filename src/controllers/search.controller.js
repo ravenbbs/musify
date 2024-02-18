@@ -42,6 +42,29 @@ const searchAll = async (req, res) => {
 
 }
 
+const searchTracks = async(req, res) => {
+  //current user profile
+  const currentProfile = await userApi.getProfile(req);
+
+  //recently played
+  const recentlyPlayed = await playerApi.getRecentlyPlayed(req);
+  const recentlyPlayedTracks = await recentlyPlayed.items.map(
+    ({ track }) => track
+  );
+
+  // search result
+  const searchTracks = await searchApi.getTrack(req);
+
+  res.render("./pages/search_track", {
+    currentProfile,
+    recentlyPlayedTracks,
+    query: req.params.query,
+    type: 'tracks',
+    searchTracks,
+    msToTimeCode
+  });
+}
+
 const searchAlbum = async(req, res) => {
         //current user profile
         const currentProfile = await userApi.getProfile(req);
@@ -59,13 +82,17 @@ const searchAlbum = async(req, res) => {
           currentProfile,
           recentlyPlayedTracks,
           query: req.params.query,
-          type: 'album',
+          type: 'albums',
           searchAlbum,
         });
 }
 
+
 module.exports = {
   searchRequest,
   searchAll,
-  searchAlbum
+  searchArtist,
+  searchAlbum,
+  searchTracks,
+  searchPlaylist
 }
