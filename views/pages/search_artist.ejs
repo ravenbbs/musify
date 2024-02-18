@@ -1,0 +1,68 @@
+<% 
+//search album
+const {
+  items: searchArtistItems
+}= locals.searchArtist
+%>
+
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <%- include('../layouts/head', {title: `Search | Soundfy`}) %>
+  </head>
+
+  <body>
+    <!-- Recently played -->
+    <%- include('../layouts/recent_played', { 
+        recentlyPlayed:locals.recentlyPlayedTracks }) %>
+
+    <article class="page custom-scrollbar" data-page>
+      <!-- Top app bar -->
+      <%- include('../partials/top_bar', locals.currentProfile) %>
+
+      <!-- Bottom nav  -->
+      <%- include('../partials/bottom_nav') %>
+
+      <!-- Search filter list -->
+      <%- include('../layouts/search_filter', { type: locals.type }) %>
+
+      <div class="main" data-main>
+        
+        <section class="section">
+          <div class="grid-list">
+            <% searchArtistItems.forEach(({name: title, id, images, type, uri}) => { %>
+
+              <% 
+              const [image] = images || []; 
+              %>
+
+              <%- include('../partials/card', {
+                variant: 'artist-card',
+                image,
+                type: 'artist',
+                title,
+                text: type,
+                link: `/artist/${id}`,
+                uri
+              }) %>
+
+            <% }) %>
+          </div>
+
+          <!-- Pagination -->
+          <%- include('../partials/pagination', locals.searchArtist) %>
+        </section>
+      </div>
+
+      <!-- Footer -->
+      <%- include('../layouts/footer') %>
+
+      <!-- Player SM -->
+      <%- include('../partials/player_sm') %>
+      
+      <!-- Player LG -->
+      <%- include('../partials/player_lg') %>
+
+    </article>
+  </body>
+</html>
