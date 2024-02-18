@@ -51,6 +51,12 @@ app.use(cors());
 app.use(cookieParser());
 
 /**
+ * Encode post request body
+ */
+app.use(express.urlencoded({ extended: true }));
+
+
+/**
  * login page
  */
 app.use("/login", login);
