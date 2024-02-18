@@ -10,12 +10,15 @@
  */
 const userApi = require("../api/user.api");
 const playerApi = require("../api/player.api");
-const apiConfig = require("../config/api.config");
-const artistApi = require("../api/artist.api");
-
+const searchApi = require("../api/search.api");
 const { msToTimeCode } = require('../utils/helpers.util');
 
-const artistDetail = async (req, res) => {
+const searchRequest = async (req, res) => {
+      res.redirect(`/search/all/${req.body.query}`)
+
+}
+
+const searchAll = async (req, res) => {
       //current user profile
       const currentProfile = await userApi.getProfile(req);
 
@@ -25,15 +28,21 @@ const artistDetail = async (req, res) => {
         ({ track }) => track
       );
 
+      // search result
+      const searchAll = await searchApi.getAll(req);
 
-      res.render("./pages/artist_detail", {
+      res.render("./pages/search", {
         currentProfile,
         recentlyPlayedTracks,
-      
+        query: req.params.query,
+        type: 'all',
+        searchAll,
+        msToTimeCode
       });
+
 }
 
-
 module.exports = {
-  artistDetail
+  searchRequest,
+  searchAll
 }
