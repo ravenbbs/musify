@@ -62,6 +62,12 @@ app.use(express.urlencoded({ extended: true }));
 app.use("/login", login);
 
 /**
+ * logout page
+ */
+app.use("/logout", logout);
+
+
+/**
  * Auth page
  */
 app.use("/auth", auth);
@@ -114,9 +120,9 @@ app.use("/track", track);
 /**
  * 404 page
  */
-// app.use((res, req) => {
-//   res.render("./pages/404" );
-// });
+app.use((req, res) => {
+  res.render("./pages/404");
+});
 
 //App listener
 app.listen(5000, () => {
