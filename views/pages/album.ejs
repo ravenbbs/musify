@@ -9,6 +9,13 @@ const {
 <html lang="es">
   <head>
     <%- include('../layouts/head', {title: `${locals.title} | Soundfy`}) %>
+
+    <% if (locals.isArtistAlbum) { %>
+      <style>
+        .card .card-text { text-transform: capitalize;}
+      </style>
+    <% } %>
+
   </head>
   <body>
     <!-- Recently played -->
