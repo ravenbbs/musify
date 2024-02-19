@@ -36,6 +36,13 @@ const MARKET = "US";
 const LOW_LIMIT = 12;
 const DEFAULT_LIMIT = 28;
 
+// Musixmatch base url for track lyrics
+const MUSIXMATCH_BASE_URL = 'https://api.musixmatch.com/ws/1.1/'
+
+// Musixmatch api key
+const MUSIXMATCH_API_KEY = process.env.MUSIXMATCH_API_KEY
+
+
 module.exports = {
   BASE_URL,
   TOKEN_BASE_URL,
@@ -47,4 +54,6 @@ module.exports = {
   MARKET,
   LOW_LIMIT,
   DEFAULT_LIMIT,
+  MUSIXMATCH_BASE_URL,
+  MUSIXMATCH_API_KEY
 };
