@@ -55,7 +55,32 @@ const getData = async (apiUrl, access_token) => {
   }
 };
 
+/**
+ * axios instance for track lyrics request in Musixmatch
+ */
+const musixmatch = axios.create({ baseURL: apiConfig.MUSIXMATCH_BASE_URL })
+
+/**
+ * Makes an asynchronous request to the Musixmatch API with the specified endpoint and parameters
+ * @param {string} endpoint - The API endpoint to be appended to the base URL
+ * @param {Object} parameters - The parameters to be included in the API request
+ * @returns {Promise<Object>} - A promise that resolves to the response data from the Musixmatch API 
+ */
+const musixmatchApi = async (endpoint, parameters) => {
+  try {
+
+    const apiUrl = `${endpoint}${querystring.stringify(parameters)}&apikey=${apiConfig.MUSIXMATCH_API_KEY}`
+    const response = await musixmatch.get(apiUrl)
+    return response.data
+
+  } catch (err) {
+    console.log(err)
+  }
+
+}
+
 module.exports = {
   token,
   getData,
+  musixmatchApi
 };
